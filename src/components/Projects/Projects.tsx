@@ -1,6 +1,36 @@
-import React from "react";
+import React, { RefObject, useRef } from "react";
+
+import sdfcu from "../../images/sdfcu.png";
+import clements from "../../images/clements.png";
+import cvc from "../../images/cvc.png";
+import ndc from "../../images/ndc.png";
+import unitedIncome from "../../images/unitedincome.png";
+
+import sdfcuVideo from "../../images/sdfcu.mp4";
+import clementsVideo from "../../images/clements.mp4";
+import cvcVideo from "../../images/cvc.mp4";
+import ndcVideo from "../../images/ndc.mp4";
+import unitedIncomeVideo from "../../images/unitedincome.mp4";
 
 const Projects = () => {
+  const sdfcuVidRef = useRef<HTMLVideoElement>(null);
+  const clementsVidRef = useRef<HTMLVideoElement>(null);
+  const cvcVidRef = useRef<HTMLVideoElement>(null);
+  const ndcVidRef = useRef<HTMLVideoElement>(null);
+  const UIVidRef = useRef<HTMLVideoElement>(null);
+
+  const playVideo = (vidRef: RefObject<HTMLVideoElement>) => {
+    if (vidRef.current) {
+      vidRef.current.play();
+    }
+  };
+  const pauseVideo = (vidRef: RefObject<HTMLVideoElement>) => {
+    if (vidRef.current) {
+      vidRef.current.pause();
+      vidRef.current.currentTime = 0;
+    }
+  };
+
   return (
     <section className="projects">
       <h3 id="projects">
@@ -32,14 +62,18 @@ const Projects = () => {
           </p>
         </div>
         <div>
-          <div className="project-img four">
+          <div
+            onMouseOut={() => pauseVideo(UIVidRef)}
+            onMouseOver={() => playVideo(UIVidRef)}
+            className="project-img four"
+          >
             <img
               className="project__screenshot"
               alt="united income"
-              src="./images/unitedincome.png"
+              src={unitedIncome}
             />
-            <video loop playsInline data-playing="false">
-              <source src="./videos/unitedincome.mp4" type="video/mp4" />
+            <video ref={UIVidRef} loop playsInline data-playing="false">
+              <source src={unitedIncomeVideo} type="video/mp4" />
             </video>
           </div>
           <h5></h5>
@@ -63,10 +97,14 @@ const Projects = () => {
           </p>
         </div>
         <div>
-          <div className="project-img five">
-            <img className="project__screenshot" src="./images/cvc.png" />
-            <video loop playsInline data-playing="false">
-              <source src="./videos/cvc.mp4" type="video/mp4" />
+          <div
+            onMouseOut={() => pauseVideo(cvcVidRef)}
+            onMouseOver={() => playVideo(cvcVidRef)}
+            className="project-img five"
+          >
+            <img className="project__screenshot" src={cvc} />
+            <video ref={cvcVidRef} loop playsInline data-playing="false">
+              <source src={cvcVideo} type="video/mp4" />
             </video>
           </div>
           <h5></h5>
@@ -106,14 +144,14 @@ const Projects = () => {
           </p>
         </div>
         <div>
-          <div className="project-img four">
-            <img
-              className="project__screenshot"
-              alt="sdfcu"
-              src="./images/sdfcu.png"
-            />
-            <video loop playsInline data-playing="false">
-              <source src="./videos/sdfcu.mp4" type="video/mp4" />
+          <div
+            onMouseOut={() => pauseVideo(sdfcuVidRef)}
+            onMouseOver={() => playVideo(sdfcuVidRef)}
+            className="project-img four"
+          >
+            <img className="project__screenshot" alt="sdfcu" src={sdfcu} />
+            <video ref={sdfcuVidRef} loop playsInline data-playing="false">
+              <source src={sdfcuVideo} type="video/mp4" />
             </video>
           </div>
           <h5></h5>
@@ -152,14 +190,18 @@ const Projects = () => {
           </p>
         </div>
         <div>
-          <div className="project-img three">
+          <div
+            onMouseOut={() => pauseVideo(clementsVidRef)}
+            onMouseOver={() => playVideo(clementsVidRef)}
+            className="project-img three"
+          >
             <img
               className="project__screenshot"
               alt="clements"
-              src="./images/clements.png"
+              src={clements}
             />
-            <video loop playsInline data-playing="false">
-              <source src="./videos/clements.mp4" type="video/mp4" />
+            <video ref={clementsVidRef} loop playsInline data-playing="false">
+              <source src={clementsVideo} type="video/mp4" />
             </video>
           </div>
           <h5></h5>
@@ -199,15 +241,19 @@ const Projects = () => {
           </p>
         </div>
         <div>
-          <div className="project-img one">
+          <div
+            onMouseOut={() => pauseVideo(ndcVidRef)}
+            onMouseOver={() => playVideo(ndcVidRef)}
+            className="project-img one"
+          >
             <img
               style={{ display: "block" }}
               className="project__screenshot"
               alt="ndc"
-              src="./images/ndc.png"
+              src={ndc}
             />
-            <video loop playsInline data-playing="false">
-              <source src="./videos/ndc.mp4" type="video/mp4" />
+            <video ref={ndcVidRef} loop playsInline data-playing="false">
+              <source src={ndcVideo} type="video/mp4" />
             </video>
           </div>
           <h5></h5>

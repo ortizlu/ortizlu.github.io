@@ -1,4 +1,6 @@
 import React from "react";
+import "./reset.scss";
+import "./index.scss";
 
 import Circle from "../components/Circle/Circle";
 import Footer from "../components/Footer/Footer";
@@ -7,10 +9,25 @@ import Header from "../components/Header/Header";
 import Projects from "../components/Projects/Projects";
 
 const IndexPage = () => {
+  const links = [
+    { href: "/blog", title: "BLOG", className: "blog-btn-desktop" },
+    {
+      href: "#projects",
+      title: "WORK",
+      className: "projects-btn-desktop",
+    },
+    {
+      href: "Resume.pdf",
+      title: "RESUME",
+      className: "resume-btn-desktop",
+      download: false,
+    },
+  ];
+
   return (
     <main>
-      <Head />
-      <Header />
+      <Head title="Welcome!" />
+      <Header links={links} />
       <Projects />
       <Circle />
       <Footer />

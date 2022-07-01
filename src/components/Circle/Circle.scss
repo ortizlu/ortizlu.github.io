@@ -1,0 +1,38 @@
+.circle {
+  border-radius: 50%;
+  border: 4px solid #fdfdfd;
+  width: 20rem;
+  height: 20rem;
+  position: relative;
+  margin: 5rem auto 0 auto;
+}
+
+.circle__text {
+  position: absolute;
+  background-color: #1f1f1f;
+  font-size: 2.6rem;
+  width: fit-content;
+  font-weight: 700;
+}
+
+.circle__text--blue {
+  color: rgb(1, 189, 255);
+  margin-right: -4px;
+}
+
+.circle__shape {
+  top: 46%;
+  width: 100%;
+  z-index: 2;
+  left: 28%;
+  transform: translateX(-50%) translateY(-50%);
+  color: #fdfdfd;
+}
+
+.circle__email {
+  top: 52%;
+  left: -10%;
+  color: #fdfdfd;
+}
+
+

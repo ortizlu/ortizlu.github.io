@@ -1,13 +1,19 @@
 import React, { useRef, useEffect } from "react";
 import Typed from "typed.js";
+import "./Header.scss";
+import Storybook from "../../images/storybook";
+import Nav from "../Nav/Nav";
+import { NavType } from "../Nav/Nav";
 
-const Header = () => {
-  const helloText = React.useRef(null);
-  const jobRoleText = React.useRef(null);
-  const helloTextTyped = React.useRef(null);
-  const jobRoleTextTyped = React.useRef(null);
+type TypedObject = any;
 
-  React.useEffect(() => {
+const Header = ({ links }: NavType) => {
+  const helloText = useRef<TypedObject>(null);
+  const jobRoleText = useRef<TypedObject>(null);
+  const helloTextTyped = useRef<TypedObject>(null);
+  const jobRoleTextTyped = useRef<TypedObject>(null);
+
+  useEffect(() => {
     const options = {
       typeSpeed: 40,
       showCursor: false,
@@ -16,11 +22,11 @@ const Header = () => {
     helloTextTyped.current = new Typed(helloText.current, {
       ...options,
       strings: ["Hello I'm"],
-    });
+    }) as TypedObject;
     jobRoleTextTyped.current = new Typed(jobRoleText.current, {
       ...options,
       strings: ["Software Engineer"],
-    });
+    }) as TypedObject;
 
     return () => {
       helloTextTyped.current.destroy();
@@ -30,42 +36,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="desktop-navbar">
-        <div className="menu">
-          <a className="blog-btn-desktop" href="./blog.html">
-            BLOG
-          </a>
-          <a className="projects-btn-desktop" href="#projects">
-            WORK
-          </a>
-          <a className="resume-btn-desktop" href="Resume.pdf" download>
-            RESUME
-          </a>
-        </div>
-        <div className="social-menu">
-          <a
-            className="email-btn-desktop"
-            href="mailto:ortizlu@icloud.com"
-            target="_blank"
-          >
-            <i className="fas fa-envelope"></i>
-          </a>
-          <a
-            className="linkedin-btn-desktop"
-            href="https://www.linkedin.com/in/ortizlu/"
-            target="_blank"
-          >
-            <i className="fab fa-linkedin"></i>
-          </a>
-          <a
-            className="github-btn-desktop"
-            href="https://github.com/ortizlu"
-            target="_blank"
-          >
-            <i className="fab fa-github-square"></i>
-          </a>
-        </div>
-      </div>
+      <Nav links={links} />
       <div className="header-text">
         <h2>
           <span
@@ -85,17 +56,13 @@ const Header = () => {
           websites for a diverse set of clients. I live and breathe Javascript
           and my current favorite tools are
           <a target="_blank" href="https://facebook.github.io/react/">
-            <span className="react-container">React</span>
+            <span className="react-container">&nbsp; React &nbsp;</span>
           </a>
           and
           <span className="second-tool-container">
             <a target="_blank" href="https://www.storybook.js.org/">
               sb
-              <img
-                className="logos secondtool"
-                alt="Storybook"
-                src="logos/storybook.svg"
-              />
+              <Storybook className="logos secondtool" />
             </a>
           </span>
         </p>
