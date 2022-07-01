@@ -1,5 +1,24 @@
 @import-normalize;
 
+/* 
+ * Purpose:
+ * Assign height: "100%" to
+ * html, body, #___gatsby &  
+ * div with role="group"
+*/
+
+html, body, #___gatsby {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+}
+
+div[role="group"][tabindex], #gatsby-focus-wrapper {
+  height: 100%;
+}
+
 .blog-body {
   min-height: 100%;
   display: grid;
@@ -27,13 +46,15 @@
 
 @media (min-width: 600px) {
   .blogs-container {
-    grid-template-columns: repeat(2, 1fr);
+    // grid-template-columns: repeat(2, 1fr);
+    max-width: 400px
   }
 }
 
 @media (min-width: 900px) {
   .blogs-container {
-    grid-template-columns: repeat(3, 1fr);
+    // once I have more than 3 articles 😊
+    // grid-template-columns: repeat(3, 1fr);
   }
 }
 

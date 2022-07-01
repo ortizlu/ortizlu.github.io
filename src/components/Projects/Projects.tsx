@@ -21,13 +21,25 @@ const Projects = () => {
 
   const playVideo = (vidRef: RefObject<HTMLVideoElement>) => {
     if (vidRef.current) {
+      vidRef.current.muted = true;
       vidRef.current.play();
     }
   };
   const pauseVideo = (vidRef: RefObject<HTMLVideoElement>) => {
-    if (vidRef.current) {
-      vidRef.current.pause();
-      vidRef.current.currentTime = 0;
+    const video = vidRef.current;
+    let isPlaying;
+
+    if (video !== null) {
+      isPlaying =
+        video.currentTime > 0 &&
+        !video.paused &&
+        !video.ended &&
+        video.readyState > video.HAVE_CURRENT_DATA;
+
+      if (isPlaying) {
+        video.pause();
+      }
+      video.currentTime = 0;
     }
   };
 
@@ -132,7 +144,7 @@ const Projects = () => {
             current Drupal 7 site with a sleek & clean design and even cleaner
             code. The site not only looks great, but adheres to strict
             accessibility standards common to financial institutions. You can
-            currently view the site
+            currently view the site&nbsp;
             <a
               href="http://sdfcu.org"
               target="_blank"
@@ -178,7 +190,7 @@ const Projects = () => {
             Insurance organization. We chose Drupal so the client would have
             maximum control over their site. Every component on the site is
             modular and can be freely edited by the Clements team. You can
-            currently view the site
+            currently view the site&nbsp;
             <a
               href="http://clements.com"
               target="_blank"

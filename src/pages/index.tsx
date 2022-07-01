@@ -10,17 +10,24 @@ import Projects from "../components/Projects/Projects";
 
 const IndexPage = () => {
   const links = [
-    { href: "/blog", title: "BLOG", className: "blog-btn-desktop" },
+    {
+      href: "/blog",
+      title: "BLOG",
+      className: "blog-btn-desktop",
+      id: "index-blog",
+    },
     {
       href: "#projects",
       title: "WORK",
       className: "projects-btn-desktop",
+      id: "index-work",
     },
     {
       href: "Resume.pdf",
       title: "RESUME",
       className: "resume-btn-desktop",
       download: false,
+      id: "index-resume",
     },
   ];
 

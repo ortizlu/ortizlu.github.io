@@ -1,10 +1,12 @@
 import React from "react";
+import "./Nav.scss";
 
 export type Link = {
   href: string;
   title: string;
   className?: string;
   download?: boolean;
+  id: string;
 };
 
 export type NavType = {
@@ -13,7 +15,12 @@ export type NavType = {
 
 const Nav = ({ links }: NavType) => {
   const linkElements = links.map((link) => (
-    <a className={link.className} href={link.href} download={link.download}>
+    <a
+      key={link.id}
+      className={link.className}
+      href={link.href}
+      download={link.download}
+    >
       {link.title}
     </a>
   ));

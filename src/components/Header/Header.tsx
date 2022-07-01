@@ -21,7 +21,7 @@ const Header = ({ links }: NavType) => {
 
     helloTextTyped.current = new Typed(helloText.current, {
       ...options,
-      strings: ["Hello I'm"],
+      strings: ["Hello, I'm"],
     }) as TypedObject;
     jobRoleTextTyped.current = new Typed(jobRoleText.current, {
       ...options,
