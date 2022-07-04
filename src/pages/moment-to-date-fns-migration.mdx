@@ -36,8 +36,164 @@ get to the biggest hurdle, the client, in order to finally nuke Moment.js for go
 
 ### 1. Reading From the Inside-Out
 
-he first hurdle was getting through the initial understanding of how Date-fns works. The coolest thing about
+The first hurdle was getting through the initial understanding of how Date-fns works. The coolest thing about
 Moment was that a function always returned a Moment object, which allowed for chaining, and consequently,
 easier-to-read code. For example:
+
+```js
+moment().add(1, "months").format("MM/DD/YYYY");
+```
+
+Even if you’ve never used Moment, you can guess pretty easily what's happening if you read from left to
+right. First, we create a Moment object without any arguments, which defaults to today’s date. We add 1 month, and return a
+date string with the format of MM/DD/YYYY. So, if today is May 25, 2022, the resulting string would be `05/25/2022`.
+
+But in Date-fns, you would read from the inside out. The same operation would read like this in Date-fns:
+
+```js
+format(addMonths(new Date(), 1), "MM/DD/YYYY");
+```
+
+Notice that the first operation is the deepest: creating a new JS Date object with today’s date. Then, we
+wrap that in `addMonths()`, add 1 as the second parameter, then wrap that in a format function and pass `MM/DD/YYYY` as the second parameter.
+
+### 2. Replacing `moment()`
+
+The second coolest thing about moment is how concise the `moment` function is at parsing out date strings. Date-fns has a `parse` function, but it is much more verbose than calling `moment()`. Which is why created our own helper function to simplify the migration process. You can find the function at the bottom of the article.
+
+## A Few More Differences
+
+But even with some noticeable differences, using Date-fns starts becoming more and more intuitive after a
+while. But there were a few more differences we realized we had to keep track of. Firstly, Moment can guess
+some formats without even being explicit:
+
+```js
+const completionDate = "2020-11-13";
+moment(completionDate).isValid(); //true
+isValid(parse(completionDate, "", new Date())); // true
+
+const completionDateStardard = "11/13/2020";
+moment(completionDateStardard).isValid(); //true
+isValid(parse(completionDateStardard, "", new Date())); // false
+
+const completionDateTwoDigitYear = "11/13/20";
+moment(completionDateTwoDigitYear).isValid(); //true
+isValid(parse(completionDateTwoDigitYear, "", new Date())); // false
+```
+
+Moment can guess the standard US format of MM/DD/YYYY and MM/DD/YY whereas Date-fns cannot. In this case, I
+believe it makes more sense to be as explicit as possible, but there were quite a few instances of past
+developers letting Moment do the guess work.
+
+Another difference is the fact that Date-fns does not allow adding floating years and months:
+
+```js
+const isOldEnoughMoment = moment(birthday, "MM/DD/YYYY")
+  .add(59.5, "years")
+  .isBefore();
+
+// half years need to be calculated as 6 months with Date-fns
+const isOldEnoughDateFns = isBefore(
+  addMonths(addYears(parse(birthday, "MM/dd/yyyy", new Date()), 59), 6),
+  new Date()
+);
+```
+
+But the biggest headache was working with UTC time. A whole separate blog post could be written about
+migrating code that used UTC time, but in summary, the benefit of the Moment object is that it can store time
+zone data, whereas vanilla Date objects cannot. Therefore, if we are passing dates over
+multiple files, it is important to keep track of what was originally intended with the date. The following is
+a small example of what I mean:
+
+```js
+import { format as formatTZ, utcToZonedTime } from "date-fns-tz";
+
+// ---------------------------
+// Now in EDT via Moment
+// ---------------------------
+
+const nowInESTMoment = moment().tz("America/New_York");
+
+// ...in another file
+nowInESTMoment.format("LLL z"); // May 25, 2022 1:55 PM EDT
+
+// ---------------------------
+// Now in EDT via Date-fns
+// ---------------------------
+
+const nowInETDateFns = utcToZonedTime(new Date(), "America/New_York");
+
+// ...another file
+// Date-fns format without time zone
+format(nowInETDateFns, "MMMM d, yyyy p z"); // May 25, 2022 1:55 PM GMT-7
+
+// date-fns-tz format with time zone specified
+formatTZ(nowInETDateFns, "MMMM d, yyyy p z", { timeZone: "America/New_York" }); // May 25, 2022 1:55 PM EDT
+```
+
+Notice that Moment keeps track that the timestamp was converted to EST/EDT and can easily format with the
+correct specified time zone. Whereas Date-fns does not have the correct time zone unless we use the
+date-fns-tz `format()` function and explicitly provide the correct time zone.
+
+## Conclusion
+
+Nonetheless, all the hard work eventually paid off, and our bundle size for our app decreased significantly
+with the removal of Moment. Date-fns is awesome and will most likely be used in many newer apps for the next
+few years. But I look forward to a day where we can use a more native approach, like the upcoming Temporal object!
+
+```js
+/**
+* Get Date Helper Function for Date-fns
+* Parse the input date with a given input format into a Date object
+* @param [date] - the date specified in a string, Date, or number
+* @param [inputFormat] - what format the input date is currently in, using date-fns format patterns - https://date-fns.org/v2.19.0/docs/format
+* @returns a Date object parsed from the input date string, Date, or number
+*/
+
+export const getDate = (
+  date?: string | Date | number,
+  inputFormat?: string,
+): Date => {
+  const invalidDate = new Date('Invalid Date');
+  if (date instanceof Date) {
+    return date;
+  } else if (typeof date === 'number') {
+    return new Date(date);
+  } else if (typeof date === 'string') {
+    if (typeof inputFormat === 'string' && inputFormat !== '') {
+      const splitDate = date.split(/[^0-9]/g) || [];
+      const firstVal = splitDate[0] || '';
+      const secondVal = splitDate[1] || '';
+      const thirdVal = splitDate[2] || '';
+      // perform extra checks for specific input formats
+      switch (inputFormat) {
+        case DateFormat.StandardSlash:
+          return firstVal.length <= 2 &&
+            secondVal.length <= 2 &&
+            thirdVal.length === 4
+            ? parse(date, inputFormat, new Date())
+            : invalidDate;
+        case DateFormat.MonthYearSlash:
+          return firstVal.length <= 2 && secondVal.length === 4
+            ? parse(date, inputFormat, new Date())
+            : invalidDate;
+        default:
+          return parse(date, inputFormat, new Date());
+      }
+    } else {
+      return parseISO(date);
+    }
+  } else {
+    // moment(undefined, format) returns an Invalid Date object, so need to replicate that behavior here
+    return inputFormat ? invalidDate : new Date();
+  }
+```
+
+## Related Links
+
+- [Temporal Documentation](https://tc39.es/proposal-temporal/docs/)
+- [You don't Need Moment.JS](https://github.com/you-dont-need/You-Dont-Need-Momentjs)
+- [Date-fns Documentation](https://date-fns.org/docs/Getting-Started)
+- [Article Image By Jonas Elia on Unsplash](https://unsplash.com/photos/O1_vdzQZwMY)
 
 export default Article;

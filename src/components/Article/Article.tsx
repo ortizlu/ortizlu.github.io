@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { getArticles } from "../../hooks/getArticles";
+import { defineCustomElements as deckDeckGoHighlightElement } from "@deckdeckgo/highlight-code/dist/loader";
 
 import Circle from "../Circle/Circle";
 import Footer from "../Footer/Footer";
@@ -7,6 +8,8 @@ import Head from "../Head/Head";
 import Nav from "../Nav/Nav";
 
 import "./Article.scss";
+
+deckDeckGoHighlightElement();
 
 const Article = ({ children }: PropsWithChildren) => {
   const links = [
