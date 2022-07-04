@@ -1,0 +1,40 @@
+---
+date: "May 25, 2022"
+title: "Date-fns to Moment Migration"
+---
+
+import Article from "../components/Article/Article";
+
+During a few of our quarterly innovation sprints (sprints where we focus on new innovative ideas or
+approaches), we thought it would be a good idea to sunset Moment.js and migrate to a more modern approach to
+dates.
+
+## Why Did We Migrate?
+
+To put it plainly, we were forced to migrate. We received the sad news on September 2020 that Moment.js would
+no longer be maintained. Moment.js has served faithfully on a vast number of websites over the history of the
+web, but in recent years there have been a surge of more modern and lighter replacements. Additionally, the
+bundle size of Moment is large, and the fact that it provides no tree shaking meant that we would have to load
+the entire library on every file that used Moment. Lastly, our engineering team was zealous for as much
+“correct” practices as possible, so we wanted a library that promoted immutability.
+
+Sure, we could’ve just used vanilla JS. But for the amount of formatting we did as an investment company, it
+made sense to just to use one of the new fancy libraries, which led us to Date-fns.
+
+## The Process
+
+It took a very long time to go through our entire codebase in order to convert every instance of Moment to
+Date-fns. We began with our API, storybook, and utilities repos. After those were completed, the busy season
+created an awkward hiatus where our engineers had to learn Date-fns if they needed to work on the back-end but
+still rendered dates with Moment on the client. But, after a few months later, we finally had enough time to
+get to the biggest hurdle, the client, in order to finally nuke Moment.js for good (R.I.P 🪦 ).
+
+## The Challenges
+
+### 1. Reading From the Inside-Out
+
+he first hurdle was getting through the initial understanding of how Date-fns works. The coolest thing about
+Moment was that a function always returned a Moment object, which allowed for chaining, and consequently,
+easier-to-read code. For example:
+
+export default Article;
