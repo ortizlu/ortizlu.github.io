@@ -12,6 +12,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
   width: 150px;
+  margin: 0 auto;
 }
 
 @media (min-width: 600px) {
@@ -22,7 +23,6 @@
     display: -webkit-flex;
     display: flex;
     width: 90%;
-    margin: 0 auto;
     -webkit-box-ortient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
