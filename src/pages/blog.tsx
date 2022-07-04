@@ -6,8 +6,7 @@ import Circle from "../components/Circle/Circle";
 import Footer from "../components/Footer/Footer";
 import Nav from "../components/Nav/Nav";
 import Head from "../components/Head/Head";
-
-import watches from "../images/watches.jpg";
+import { getArticles } from "../hooks/getArticles";
 
 const blog = () => {
   const links = [
@@ -32,29 +31,15 @@ const blog = () => {
     },
   ];
 
-  type Blog = {
+  type Article = {
     title: string;
-    style: {
-      backgroundImage: string;
-      backgroundPosition: string;
-    };
+    image: string;
     href: string;
     date: string;
     description: string;
   };
 
-  const blogs: Blog[] = [
-    {
-      href: "./moment-to-date-fns-migration",
-      style: {
-        backgroundImage: `url(${watches})`,
-        backgroundPosition: "center",
-      },
-      title: "Moment.js to Date-fns Migration",
-      date: "May 25, 2022",
-      description: "During a few of our quarterly innovation sprints...",
-    },
-  ];
+  const articles: Article[] = getArticles();
 
   return (
     <div className="blog-body">
@@ -65,9 +50,15 @@ const blog = () => {
 
       <section className="blogs">
         <div className="blogs-container">
-          {blogs.map(({ title, style, href, date, description }: Blog) => (
-            <a className="article-preview" href={href} key={href}>
-              <span className="article-preview__image" style={style}></span>
+          {articles.map(({ title, date, description, href, image }) => (
+            <a className="article-preview" href={`./${href}`} key={href}>
+              <span
+                className="article-preview__image"
+                style={{
+                  backgroundImage: `url(${image})`,
+                  backgroundPosition: "center",
+                }}
+              ></span>
               <span className="article-preview__title">{title}</span>
               <span className="article-preview__date">{date}</span>
               <span className="article-preview__description">
