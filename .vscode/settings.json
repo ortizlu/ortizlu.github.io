@@ -1,0 +1,54 @@
+{
+  "workbench.colorCustomizations": {
+    "[One Dark Pro]": {
+      "editor.background": "#151515",
+      "sideBar.background": "#1A1A1A",
+      "terminal.foreground": "#ffffff",
+      "terminal.background": "#131313"
+    },
+    "[One Dark Pro Flat]": {
+      "editor.background": "#ffffff",
+      "sideBar.background": "#e9e9e9",
+      "sideBar.foreground": "#464646",
+      "terminal.foreground": "#ffffff",
+      "terminal.background": "#130e0e",
+      "editor.lineHighlightBackground": "#646464"
+    },
+    "[Atom One Light]": {
+      "activityBar.foreground": "#ffffff",
+      "sideBar.foreground": "#000000"
+    },
+    "[Bluloco Light]": {
+      "activityBar.foreground": "#ffffff",
+      "sideBar.foreground": "#000000",
+      "editorBracketHighlight.foreground1": "#ae8054",
+      "editorBracketHighlight.foreground2": "#b66ecc",
+      "editorBracketHighlight.foreground3": "#56b6c2",
+      "editorCursor.foreground": "#528bff",
+      "editorGutter.addedBackground": "#109868",
+      "editorWarning.foreground": "#ae8054",
+      "symbolIcon.typeParameterForeground": "#bf5d65",
+      "terminal.ansiBlack": "#3f4451",
+      "terminal.ansiBlue": "#4aa5f0",
+      "terminal.ansiBrightBlack": "#4f5666",
+      "terminal.ansiBrightBlue": "#4dc4ff",
+      "terminal.ansiBrightCyan": "#4cd1e0",
+      "terminal.ansiBrightGreen": "#a5e075",
+      "terminal.ansiBrightMagenta": "#de73ff",
+      "terminal.ansiBrightRed": "#ff616e",
+      "terminal.ansiBrightWhite": "#e6e6e6",
+      "terminal.ansiBrightYellow": "#f0a45d",
+      "terminal.ansiCyan": "#42b3c2",
+      "terminal.ansiGreen": "#8cc265",
+      "terminal.ansiMagenta": "#c162de",
+      "terminal.ansiRed": "#e05561",
+      "terminal.ansiWhite": "#d7dae0",
+      "terminal.ansiYellow": "#d18f52",
+      "terminal.foreground": "#abb2bf",
+      "terminal.selectionBackground": "#abb2bf30"
+    },
+    "activityBar.background": "#472039",
+    "titleBar.activeBackground": "#632D50",
+    "titleBar.activeForeground": "#FCF9FB"
+  }
+}
